@@ -6,6 +6,10 @@ public class MockRandomValueGenerator implements IRandomValueGenerator{
 	private int randomNum;
 	private boolean probabilityResult;
 	
+	public MockRandomValueGenerator() {
+		//constructor that does nothing
+		
+	}
 	@Override
 	public int getRandomNum(int min, int max) {
 		return randomNum;//will always return set randomNum

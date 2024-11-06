@@ -5,8 +5,8 @@ public class BetBalanceTracker {
 	private IRandomValueGenerator rand;
 	private double balance;
 	
-	//constructor
-	public BetBalanceTracker(double minBalance, IRandomValueGenerator rand) throws InvalidMinimumException {
+	//constructor 
+	public BetBalanceTracker(double minBalance, IRandomValueGenerator rand){
 		
 	}
 	
