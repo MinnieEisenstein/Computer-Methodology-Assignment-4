@@ -8,24 +8,15 @@ public class MockRandomValueGenerator implements IRandomValueGenerator{
 	
 	@Override
 	public int getRandomNum(int min, int max) {
-		Random rand = new Random(max);
-		randomNum=rand.nextInt()-min;
-		return randomNum;
+		return 5;//will always return 5
 		
 	}
 
 	@Override
 	public boolean getTrueWithProbability(double p) {
-		// returns true or false based on the Probability
-		double randomDecimal =this.getRandomNum(1, 100)/100;
-		
-		if (randomDecimal > p) {//if the random dec is less than the probability dec, return true
-			return true;
-		}
-		return false;
+		 return false;//will always return false
 	}
 	
-	
-	public setRandomNum
+
 	
 }
