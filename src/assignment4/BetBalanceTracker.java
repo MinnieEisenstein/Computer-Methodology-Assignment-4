@@ -30,19 +30,20 @@ public class BetBalanceTracker {
 		
 	}
 	
-	public void betOnANumber(double amnt, int min, int max, int selectedNumber) {
+	public double betOnANumber(double amnt, int min, int max, int selectedNumber) throws InvalidBetException,  InvalidBetAmountException {
+		return 0.0;
 		
 	}
 	
-	public void betOnProbability(double amnt, double p) {
-		
+	public double betOnProbability(double amnt, double p) throws InvalidProbabilityException, InvalidBetAmountException{
+		return 0.0;
 	}
+
 	
-	
-	
-	
-	
-	
+
+	public void setMinBalance(double minBalance) {
+		this.minBalance = minBalance;
+	}
 	
 
 
