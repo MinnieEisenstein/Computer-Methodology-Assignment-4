@@ -7,13 +7,15 @@ public class BetBalanceTracker {
 	
 	//constructor 
 	public BetBalanceTracker(double minBalance, IRandomValueGenerator rand){
-		
+		this.minBalance =minBalance;
+		this.rand= rand;
+		balance=0;
 	}
 	
 	//a simple getter for the current balance
 	public double getCurrentBalance() {
 		
-		return 0;
+		return balance;
 		
 	}
 	
@@ -22,21 +24,40 @@ public class BetBalanceTracker {
 	//or not, in which case the bet cannot be placed
 	
 	public boolean canBet(double amnt) {
-		return true;
+		return (balance - amnt >= minBalance);
 	}
 	
 	//manually increases the balance, rejects negative numbers
-	public void addMoney(double amnt) {
+	public void addMoney(double amnt) throws InvalidAmountException {
+		if(amnt < 0) {throw new InvalidAmountException();}
 		
+		balance +=amnt;
 	}
 	
 	public double betOnANumber(double amnt, int min, int max, int selectedNumber) throws InvalidBetException,  InvalidBetAmountException {
-		return 0.0;
+		if (rand.getRandomNum(min, max)== selectedNumber) {
+			//bet is won!!
+			//add the money won to balance
+			//(range-1) * amnt betted
+			double moneyWon = (max-min +1) *amnt;
+			//this.addMoney(moneyWon);
+			return moneyWon;
+		}
+		else {
+			return 0- amnt;
+		}
 		
 	}
 	
+	//for reference: (p^-1 -1) * amount
 	public double betOnProbability(double amnt, double p) throws InvalidProbabilityException, InvalidBetAmountException{
-		return 0.0;
+		if(rand.getTrueWithProbability(p)) {
+			double moneyWon = ((p/1)-1) *amnt;
+			return moneyWon;
+		}
+		else {
+			return 0-amnt;
+		}
 	}
 
 	

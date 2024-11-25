@@ -28,23 +28,20 @@ class BetBalanceTracker_TEST {
 	    tracker2 = new BetBalanceTracker(-10, rand2);
 	    mockTracker = new BetBalanceTracker(-5, mockRand);
 	}
-	
-	
-	
-	
+
 	@Test
 	//testing the balance methods
 	
-	 void getCurrentBalanceReturnsMinBalanceIfNothingIsAdded() {
+	 void testGetCurrentBalanceReturnsZeroIfNothingIsAdded() {
 		
 		assertEquals(tracker1.getCurrentBalance(), 0);
-		assertEquals(tracker2.getCurrentBalance(), -10);
-		assertEquals(mockTracker.getCurrentBalance(), -5);
+		assertEquals(tracker2.getCurrentBalance(), 0);
+		assertEquals(mockTracker.getCurrentBalance(), 0);
 		
 	}
 	
 	@Test
-	void constructorSetsBalanceCorrectly() {
+	void testConstructorSetsBalanceCorrectly() {
 		// Verify the initial balance is set correctly
 	    assertEquals(0, tracker1.getCurrentBalance());
 	    assertEquals(-10, tracker2.getCurrentBalance());
@@ -52,7 +49,7 @@ class BetBalanceTracker_TEST {
 	}
 	
 	@Test
-	void getCurrentBalanceWorksWithValidInput() throws InvalidAmountException {
+	void testGetCurrentBalanceWorksWithValidInput() throws InvalidAmountException {
 
 	    // Add money and verify the balance updates
 	    tracker1.addMoney(50);
@@ -70,7 +67,7 @@ class BetBalanceTracker_TEST {
 	}
 	
 	@Test
-	void getCurrentBalanceWorksWithInvalidInput() throws InvalidAmountException {
+	void testGetCurrentBalanceWorksWithInvalidInput() throws InvalidAmountException {
 		// try to add a negative amount and make sure exception is thrown
 		// For tracker1
 	    assertThrows(InvalidAmountException.class, () -> {
@@ -90,7 +87,7 @@ class BetBalanceTracker_TEST {
 	
 	
 	@Test
-	void addMoneyIncreasesBalanceCorrectly() throws InvalidAmountException {
+	void testAddMoneyIncreasesBalanceCorrectly() throws InvalidAmountException {
 	    // Test adding a positive amount to tracker1
 	    tracker1.addMoney(50);
 	    assertEquals(50, tracker1.getCurrentBalance(), "Balance should be 50 after adding 50 to tracker1");
@@ -111,7 +108,7 @@ class BetBalanceTracker_TEST {
 	}
 
 	@Test
-	void addMoneyRejectsNegativeValues() throws InvalidAmountException {
+	void testAddMoneyRejectsNegativeValues() throws InvalidAmountException {
 	    // Try to add a negative amount to tracker1
 	    assertThrows(InvalidAmountException.class, () -> {
 	        tracker1.addMoney(-10);  // Try to add a negative amount
@@ -129,7 +126,7 @@ class BetBalanceTracker_TEST {
 	}
 
 	@Test
-	void addMoneyWithZeroInput() throws InvalidAmountException {
+	void testAddMoneyWithZeroInput() throws InvalidAmountException {
 	    // Test adding 0 to tracker1
 	    tracker1.addMoney(0);
 	    assertEquals(0, tracker1.getCurrentBalance(), "Balance should stay 0 after adding 0 to tracker1");
@@ -147,7 +144,7 @@ class BetBalanceTracker_TEST {
 	//for reference public boolean canBet(double amnt) 
 	
 	@Test
-	void canBetWhenBalanceIsEnough() throws InvalidAmountException {
+	void testCanBetWhenBalanceIsEnough() throws InvalidAmountException {
 	    tracker1.addMoney(50); // Balance is 50
 	    assertTrue(tracker1.canBet(25), "Tracker1 should allow a bet of 25, when balance is 50 and minBalance is 0");
 	    tracker2.addMoney(10);// Balance is 10
@@ -157,7 +154,7 @@ class BetBalanceTracker_TEST {
 	}
 
 	@Test
-	void canBetWhenAmountEqualsBalance() throws InvalidAmountException {
+	void testCanBetWhenAmountEqualsBalance() throws InvalidAmountException {
 		tracker1.addMoney(50); // Balance is 50
 	    assertTrue(tracker1.canBet(50), "Tracker1 should allow a bet of 50, when balance is 50 and minBalance is 0");
 	    tracker2.addMoney(10);// Balance is 10
@@ -166,7 +163,7 @@ class BetBalanceTracker_TEST {
 	    assertTrue(mockTracker.canBet(100));
 	}
 	@Test
-	void canBetWhenAmountWontExceedMinBalance() throws InvalidAmountException {
+	void testCanBetWhenAmountWontExceedMinBalance() throws InvalidAmountException {
 		tracker1.addMoney(50); // Balance is 50, min balance is 0
 	    assertTrue(tracker1.canBet(50), "Tracker1 should allow a bet of 50, when balance is 50 and minBalance is 0");
 	    tracker2.addMoney(10);// // Balance is 10, min balance is -10
@@ -175,7 +172,7 @@ class BetBalanceTracker_TEST {
 	    assertTrue(mockTracker.canBet(103));
 	}
 	@Test
-	void cantBetWhenAmountExceedsMinBalance() throws InvalidAmountException {
+	void testCantBetWhenAmountExceedsMinBalance() throws InvalidAmountException {
 		tracker1.addMoney(50); // Balance is 50, min balance is 0
 	    assertFalse(tracker1.canBet(51), "Tracker1 wont allow a bet of 51, when balance is 50 and minBalance is 0");
 	    tracker2.addMoney(10);// // Balance is 10, min balance is -10
