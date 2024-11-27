@@ -39,21 +39,21 @@ public class BetBalanceTracker {
 	        throw new InvalidBetException();
 	    }
 
-	    if (!canBet(amnt)) {  // Check if the bet amount is valid
+	    if (!canBet(amnt)) {  // check if the bet amount is valid
 	        throw new InvalidBetAmountException();
 	    }
 
-	    int randomNum = rand.getRandomNum(min, max); // Generate a random number
+	    int randomNum = rand.getRandomNum(min, max); // generate a random number
 
 	    if (randomNum == selectedNumber) {
-	        // Bet won!
-	        double moneyWon = (max - min + 1 - 1) * amnt;  // Calculate winnings
-	        balance += moneyWon;  // Update balance on win
-	        return moneyWon;  // Return the winnings amount
+	        // bet won
+	        double moneyWon = (max - min + 1 - 1) * amnt;  // calculate winnings
+	        balance += moneyWon;  // update balance on win
+	        return moneyWon;  // return the winnings amount
 	    } else {
-	        // Bet lost!
-	        balance -= amnt;  // Deduct the bet amount from balance (loss case)
-	        return -amnt;  // Return the negative bet amount to indicate loss
+	        // bet lost
+	        balance -= amnt;  // subtract bet amnt from balance
+	        return -amnt;  // Return the negative bet amount to show loss
 	    }
 	}
 	
