@@ -34,29 +34,50 @@ public class BetBalanceTracker {
 		balance +=amnt;
 	}
 	
-	public double betOnANumber(double amnt, int min, int max, int selectedNumber) throws InvalidBetException,  InvalidBetAmountException {
-		if (rand.getRandomNum(min, max)== selectedNumber) {
-			//bet is won!!
-			//add the money won to balance
-			//(range-1) * amnt betted
-			double moneyWon = (max-min +1) *amnt;
-			//this.addMoney(moneyWon);
-			return moneyWon;
-		}
-		else {
-			return 0- amnt;
-		}
-		
+	public double betOnANumber(double amnt, int min, int max, int selectedNumber) throws InvalidBetException, InvalidBetAmountException, InvalidAmountException {
+	    if (selectedNumber < min || selectedNumber > max) {
+	        throw new InvalidBetException();
+	    }
+
+	    if (!canBet(amnt)) {  // Check if the bet amount is valid
+	        throw new InvalidBetAmountException();
+	    }
+
+	    int randomNum = rand.getRandomNum(min, max); // Generate a random number
+
+	    if (randomNum == selectedNumber) {
+	        // Bet won!
+	        double moneyWon = (max - min + 1 - 1) * amnt;  // Calculate winnings
+	        balance += moneyWon;  // Update balance on win
+	        return moneyWon;  // Return the winnings amount
+	    } else {
+	        // Bet lost!
+	        balance -= amnt;  // Deduct the bet amount from balance (loss case)
+	        return -amnt;  // Return the negative bet amount to indicate loss
+	    }
 	}
 	
 	//for reference: (p^-1 -1) * amount
-	public double betOnProbability(double amnt, double p) throws InvalidProbabilityException, InvalidBetAmountException{
+	public double betOnProbability(double amnt, double p) throws InvalidProbabilityException, InvalidBetAmountException, InvalidAmountException{
+		
+		if(p > 1 || p < 0) {
+			throw new InvalidProbabilityException();
+		}
+		
+		if(!canBet(amnt)) {//throw exception if bet amnt is too much and will cause balance below minbalance
+			throw new InvalidBetAmountException();
+		}
+		
+		
 		if(rand.getTrueWithProbability(p)) {
-			double moneyWon = ((p/1)-1) *amnt;
+			double moneyWon =((1 / p) - 1) * amnt;
+			moneyWon = roundToTwoDecimalPlaces(moneyWon); 
+			 balance += moneyWon; 
 			return moneyWon;
 		}
 		else {
-			return 0-amnt;
+			balance -= amnt;
+			return -amnt;
 		}
 	}
 
@@ -66,6 +87,8 @@ public class BetBalanceTracker {
 		this.minBalance = minBalance;
 	}
 	
-
+	public double roundToTwoDecimalPlaces(double value) {
+	    return Math.round(value * 100.0) / 100.0;
+	}
 
 }
